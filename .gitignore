@@ -1,0 +1,15 @@
+# secrets — never commit any of these
+runpod.key
+opensea.key
+evm.key
+*.key
+*.password
+wallets/
+pod.json
+ssh-info.json
+
+# runtime
+node_modules/
+logs/
+*.log
+orders/

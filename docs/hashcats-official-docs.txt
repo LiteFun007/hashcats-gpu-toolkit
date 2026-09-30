@@ -1,0 +1,113 @@
+{
+  "truncated": true,
+  "preview": "\"\\n Skip to contentHashcatsMineCollection$HASHDocs60 468 774337 minedConnectMenuSectionsMineCollection$HASHDocsWalletConnect walletSet
+tingsSoundOnOffNetworkBlock60 468 774Mined337Section:00Overview1/10Contents1/1000Overview01Mining02Difficulty03Economy04Flywheel05Hash to cat06On chai
+n07Contracts08Roadmap09QuestionsHow it worksHashcats is one ERC-721 contract on Robinhood Chain. Nothing here is sold ready made: the only way a token
+ comes into existence is a hash below the current target, paid for at the entry price of the current epoch.Every moving part is below, and 10 of them 
+are instruments you can run — real keccak256, the live chain, and the same formulas the contract uses.One number, one catdeterministicseed33 leading z
+ero bits of work33 bits of work33 bits of work behind itThe picture is a pure function of this number. No metadata server, no upload, no off-chain gen
+erator: ask the contract twice and you get the same 4 972 bytes, and so does everybody else.01MiningWhat your browser actually computesFour values, on
+e hash, one comparison — and you can run them right here. Everything else on this page is a consequence of them.Open the minerA miner picks a nonce an
+d hashes four values together: their own address, the nonce, the work behind the previous cat, and an anchor — the hash of a recent block. If the resu
+lt is strictly below the current target, the contract accepts it, takes the entry price of the current epoch and mints the next token.Every cat is cha
+ined to the one before it. The work of the last cat goes into the next one, so nothing can be mined ahead of time, and the moment somebody else mints,
+ every solution being held becomes worthless.The address is part of the work. That is what makes a solution untradeable: the same nonce and anchor pro
+duce a different hash for anybody else.Stealing a solutionimpossibleThe address is inside the hash, so a copied transaction computes to something else
+. And this chain has no public mempool to copy it from in the first place.The miner runs on processor cores, and on your graphics card the moment you 
+switch it there — the switch appears whenever the browser has WebGPU. The card is not taken without asking: it draws this page too. Cores run a WebAss
+embly module that hashes two nonces at a time on 128-bit lanes; the card runs the same round of keccak as a compute shader, in waves of a few million 
+hashes short enough that the page keeps drawing while it computes. All three engines — JavaScript, WebAssembly and the shader — compute the same hash.
+The card is checked while it works. A card returns depths, not hashes — at this speed nothing else fits through — so every attempt it reports as promi
+sing is recomputed on the processor before it can become a transaction. A card that miscounts, through overclocking or a bad driver, is dropped at the
+ first disagreement and mining carries on without it.Measured on one desktop250 MH/sA GeForce GTX 1050 Ti from 2016 through WebGPU, against 5.8 MH/s o
+n one core of the same machine — that card does the work of forty-three cores, and a current one does far more.What the miner hashesliveminer0xEB5d...
+714cYour address is hashed in, so a copied transaction computes to something else: a found solution is yours only.nonce4 815 162 342The only free valu
+e of the four — this is what workers spin, hundreds of thousands of times a second.previous cat0x00000000...0a87f2The work behind the cat before yours
+. Every mint replaces it, and everything found under the old one is spent.anchor0x5dff1ec4...82bc31A recent L2 block hash, read from the live chain. I
+t stays valid for about 25 seconds.keccak256 of the four0x915cad90...9c87dd0 / 41 zero bitstarget right now41 zero bitsAbove the target, so nothing ha
+ppens. One nonce is one attempt, and about 2.2T of them stand between a browser and a cat. That number is what the entry price is paid against — not a
+ queue, not a fee.Next nonceJump somewhere elseThe hash you found is not the cat. The seed is that hash hashed again with the time bucket of the mint 
+— the clock rounded down to 5 minutes. The look of a solution is settled only once it lands, and a solution cannot be kept: the work of every cat goes
+ into the next one, so what was found for this cat is worth nothing for the one after it.From work to picturelivework hash41 zero bits paid fortime bu
+cket5 963 837The clock of the mint, rounded down to 5 minutes. Inside one bucket the answer does not move at all, and a solution only lives for about 
+25 seconds — long enough to send, not long enough to sit and wait for a better bucket.keccak256 of the two = the seedSame work, another bucket, anothe
+r cat. No black cells at the head of the seed: leading zeros were the work, and the work is already paid. What the renderer reads is this number — so 
+spare hashrate cannot be spent searching for a rare cat. It buys zero bits, and nothing else.Next bucketWhat a zero bit costsinteractiveLeading zero b
+its required22 bitsHashes per cat4.2MOne browser tab0sChance in a minute100%At 23.2 MH/s — 4 cores of an ordinary laptop, at the 5.8 MH/s per core thi
+s miner measures. Every extra bit doubles all three numbers; there is no shortcut, and that is the whole point.A solution dies with the next cat, or i
+n about 25 seconds — whichever comes first. The anchor is the hash of a recent L2 block, read through ArbSys.arbBlockHash, and the contract accepts on
+e of the last 250 of them. At the planned pace the next cat usually arrives first; the anchor is the backstop for a quiet hour.Anchor windowliveL2 blo
+ck 60 468 774One cell is a second of the 250-block window, the bright one is now. When it runs out, the solution is dead and the search starts again a
+gainst a fresh anchor — 25 seconds is the longest a found hash can live, and the next cat usually ends it sooner.One mint, end to end1Your browser rea
+ds the current target, the anchor, the work of the last cat and the entry price.2Web workers hash nonces until one lands below the target.3The solutio
+n goes to the contract with the entry price attached.4The contract recomputes the hash and checks it itself.570 per cent of the price stays as rent fo
+r earlier cats, 30 goes to the hook.6The hash is hashed again with the 5-minute time bucket, and that seed is the cat.02DifficultySix rules that set t
+he targetDifficulty is not one number drifting upward: a floor that rises with the epoch, a retarget every eight mints, and a streak that doubles the 
+work for every recent mint.Epoch floor and streakinteractiveEpoch6Recent mints in the streak3Epoch floor32bitsWith the streak35bitsEntry price0.01008E
+THEvery bit doubles the search, so the two sliders multiply: the epoch sets the floor, the streak stacks on top of it, and the price of that epoch mov
+es alongside — money and work grow together.Epoch floor26 bits + epochWork doubles every epoch, and the retarget may never go below that line. Measure
+d on the base difficulty, before the streak is added.Base difficulty31 bits nowWhat the retarget works on, read from the chain as it stands. The first
+ cat was mined at the number the deployment set; from there the pace alone moves it, and it never goes below the epoch floor.Retargetevery 8 mintsComp
+ares the real pace with the plan of 10 seconds and moves the base: up to 4x harder in one window, at most 2x easier, and never below the floor.Streakx
+2 per recent mintDoubles the work for every recent mint and cools one step at a time, every 10 seconds, counted per network and per address. Twelve mi
+nts in a row cost 4 096x the work of one; the doubling stops after 16 steps.Failsafe5 min, one epochAfter that much silence the floor may be broken th
+rough, and by exactly one epoch — never deeper.One cat per block1 per L2 blockA hard ceiling of about ten cats a second, counted by ArbSys.arbBlockNum
+ber() — the real L2 block, not block.number.Every epoch doubles four things at once: the work, the entry price, the size of the epoch and the rate at 
+which a burn returns tokens.The wall that ends the collectioninteractiveCat number16 500Past the wall124Work multiplier76xOne GPU7m 36sThe first hundr
+ed cats past the wall are still easy. A few hundred later the same GPU needs a day for one, and that — not a supply cap — is what ends the collection.
+Numberswhat runs todayconstantvaluebaseTarget31 bits nowEPOCH_FLOOR26 bits + epochTARGET_INTERVAL10 sRETARGET_WINDOW8 mintsSTREAK_COOLDOWN10 s per ste
+pFAILSAFE_IDLE5 min, one epochchain.wallFrom16 376ANCHOR_WINDOW250 L2 blocks · 25 sBLOCK_CEILING1 per L2 block · 100 ms03EconomyWhat the price is, and
+ where it goesThe entry price is the number of cats that already exist times a fixed step. 70 per cent of it becomes rent for earlier cats, 30 goes to
+ the hook.The $HASH pageEpochs double. The first is 8 cats, each next one twice as large; there is no list of thresholds and no supply cap. The price 
+is constant inside an epoch and changes only at its border.The price is derived, not chosen. It equals the number of cats already created times 0.0000
+2 ETH — exactly as many recipients as have to be paid. So “one rate to every earlier cat” is not a distribution rule but an identity: what is collecte
+d and what is owed are the same number written twice.The first 8 cats are the exception. There is nobody to pay rent to yet, so they cost a flat 0.000
+069 ETH and the whole payment goes to the hook. From the second epoch on, the formula above is the whole story.The cheap band504 catsup to 0.00496 ETH
+The first 6 epochs together. The price is flat inside an epoch, so a whole epoch is entered at one number — and these are pocket change.Where one mint
+ goesEntry price now0.00496ETHepoch 5To earlier cats70%0.000014 ETH eachTo the hook30%buys the token back and burns itone mint · cat #505epoch 6 · 504
+ cats before it70% · earlier cats30% · the hookpaid at the mint0.01008 ETHThe entry price of epoch 6: 504 cats already exist, and each of them is owed
+ 0.000014 ETH.to 504 earlier cats0.00706 ETHNot a transfer: the money stays in the contract and the claim on it appears arithmetically, whenever its o
+wner comes to collect.to the hook0.00302 ETHBuys $HASH back inside somebody else’s swap and burns what it bought, never spending more than it has coll
+ected.504 x 0.000014 = 0.00706 ETHThe identity the whole design rests on: what a mint collects for holders and what it owes them are the same number, 
+written from two sides.Rent is a rightno transferA mint moves no money to holders: their share stays in the contract and the claim on it appears arith
+metically, so the cost of a mint does not grow with the number of them. Only the hook is paid on the spot.Own epoch does not paylater mints onlyA cat 
+is paid by mints of later epochs, never by its neighbours — which is what keeps the price flat inside an epoch.The claim follows the catcursor per tok
+enSell the cat and the uncollected rent goes with it: the claim lives on the token, not on the address that mined it.A burned cat pays the rest70 / 30
+ againBurning hands the owner the rent already earned. What that cat would have earned later is split by the same rule as a mint — 70 per cent to the 
+cats still alive, 30 to the hook — so every burn nudges the standing rate up.Burning is the other exit. A cat burned in its own epoch returns 1 000 to
+kens. A holder cannot both collect rent and cash out at full value — while you wait for the rent, the exit rate melts.A cat cannot be burned the minut
+e it is mined. Two doors stand before the burn: at least one more cat has to exist after yours, and 10 minutes have to pass since the mint. The contra
+ct answers both separately, so the page can tell you which one you are waiting on.Burn rate by epochs waited1000 · 500 · 250 · 125Halves with every ep
+och waited, and slides in between: inside an epoch the rate walks down from one figure to the next.Hold or burninteractiveCat number64 · ep 3Epochs it
+ waited3Paid to mint0.00112ETHRent earned0.01254ETHBurn returns125$HASHAt the ceiling0.00126ETHThe last figure prices those tokens at the ceiling — en
+try price divided by 1 000 — because above it, mining a cat and burning it is cheaper than buying the tokens, and that arbitrage pins them down.The po
+ol is part of the design, not something opened later. There is exactly one pool of ETH and $HASH; liquidity in it can be added by the hook alone, and 
+the trade is charged by the hook instead of by the pool.Pool fee0%The whole levy is the hook’s, and it goes back into buying the token.Trading opensca
+t 1 016The end of the sixth epoch. Until the collection reaches it every swap is refused, and the threshold is counted in cats rather than days — a sl
+ow chain simply postpones the opening instead of opening an empty market.Fee on a trade2.5% in, 2.5% outTaken by the hook on the ether side of the tra
+de: a buyer pays it on top of what reaches the pool, a seller has it withheld from what comes back. It is the same fee that makes sandwiching the buyb
+ack unprofitable.The first minutes cost more10 min, down to 2.5%Trading can open at a rate well above the standing one — as high as 50% — falling to i
+t in a straight line over the window. That takes the profit out of hitting the pool in its first second. The clock runs from the moment trading opens 
+rather than from the first trade, so arriving three minutes in already means a lower rate, and a day later means the standing one.Buyback per block1% 
+of price · 0.025 ETHTwo limits, and the tighter one wins: how far the buying may move the price inside one block, and how much ether it may spend ther
+e. The price limit is the one that does the work — it scales with the depth of the pool, and buying “as far as the price allows” leaves a sandwich not
+hing to take. A block here is an L1 block, about twelve seconds, and both limits are counted per block rather than per buy.Royalty on a resale5%Declar
+ed as ERC-2981 with the hook as the receiver, and that receiver cannot be changed: reselling a cat is a third inflow to the buyback, next to mints and
+ trades.Project share30% of the hookEverything that reaches the hook is split before it queues up: this much is set aside for the project, the rest bu
+ys $HASH back and burns it. The split is the same for a mint, a trade fee and a royalty.Across the whole run to 16 376 cats the contract collects 1 78
+7 ETH, of which 536.085 ETH reaches the hook.The token, the burn curve and the hook have a page of their own.04FlywheelNo part of this works aloneRead
+ separately, the parts above look ordinary: a share to holders, a buyback, a halving. Each one feeds the next, and the turn that just finished sets up
+ the one after it.Mining pays the holders70% of every mintAdded as a claim rather than moved as a transfer, so every earlier cat collects whenever its
+ owner comes for it.The same mint buys the token30% to the hookSo does every trading fee, and so does every royalty on a resale — three kinds of activ
+ity pressing on one token.A burn makes the rest richerrent per survivor upThe cat stops collecting while exactly as many buyers keep paying, and 30 pe
+r cent of what it would have earned goes to the buying instead. One exit feeds both sides.Richer cats pull more miningand entry costs moreMore mints m
+ean more rent and more buying, and the price rises with every cat that has ever existed.The loop prices itself2 372x ceilingWhile 1 000 tokens are wor
+th more than entry to the current epoch, mining a cat and burning it is free money — arbitrage pins the token to entry price divided by 1 000. That ce
+iling doubles every epoch, driven by nothing but the cost of making the next cat.What one burn does to everybody elseinteractiveBurned50%Rent per surv
+ivorx1.70Of each mint, into the buyback40.5%The faded ones are gone, and both numbers moved because of them: their future rent went to the cats still 
+here, and a third of it went to the desk that buys the token back. Those burns minted 8.2M $HASH along the way.05Hash to catHow a number becomes a pic
+tureDeterministic, on chain, and identical for everyone who asks. No metadata server decides anything here.Browse the collectionEach of the 11 slots g
+ets its own hash of the seed and a weighted pick inside that slot. An empty slot is a trait too, with its own share — that is why cats without a hat e
+xist on purpose.Rules that run after the roll40 + 50clash · typeThey force a matching body onto a robot head and drop a ",
+  "bytes": 25116
+}

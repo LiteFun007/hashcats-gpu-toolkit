@@ -1,0 +1,28 @@
+{
+  "name": "hashcats-quickstart",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mine Hashcats on a rented RunPod GPU and sell the cats on OpenSea — headless client, deployment scripts and the verified protocol notes.",
+  "bin": { "hashcats": "./cli.mjs" },
+  "scripts": {
+    "state": "node cli.mjs state",
+    "bench": "node cli.mjs bench --seconds 10 --threads 4",
+    "mine": "node cli.mjs mine --threads 4",
+    "oracle": "node cli.mjs oracle --nonce 12345",
+    "test:hash": "node tests/probe-hash.mjs",
+    "test:seaport": "node tests/probe-seaport.mjs",
+    "test:encode": "node tests/probe-opensea-encode.mjs",
+    "test:sell-path": "node tests/probe-sell-path.mjs"
+  },
+  "dependencies": {
+    "viem": "^2.0.0"
+  },
+  "optionalDependencies": {
+    "puppeteer-core": "^24.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
